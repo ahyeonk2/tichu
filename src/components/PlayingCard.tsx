@@ -1,0 +1,2 @@
+export function PlayingCard({value,index=0,sameSuit=false}:{value:string;index?:number;sameSuit?:boolean}){return <span className={`playing-card suit-${sameSuit?0:index%4}`} aria-label={value}><small>{value}</small><b>{['✦','◆','✳','▴'][sameSuit?0:index%4]}</b><small>{value}</small></span>}
+export function Hand({cards,sameSuit=false}:{cards:string[];sameSuit?:boolean}){return <span className="hand">{cards.map((value,i)=><PlayingCard key={i} value={value} index={i} sameSuit={sameSuit}/>)}</span>}

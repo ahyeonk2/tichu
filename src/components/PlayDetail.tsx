@@ -1,0 +1,13 @@
+import {motion,useReducedMotion} from 'motion/react';
+export function PlayBackdrop({y}:{y:number}){return <g transform={`translate(171.5 ${y}) scale(.25)`}><g transform="translate(356 498) rotate(-90) translate(-402 -419)"><image href={`${import.meta.env.BASE_URL}figma/play-oval.png`} width="804" height="419"/></g></g>}
+export function PlayDetail({y,onRule}:{y:number;onRule:(id:string)=>void}){const reduced=useReducedMotion();return <g transform={`translate(171.5 ${y}) scale(.25)`} className="figma-type">
+ <circle cx="354" cy="191" r="40" fill="#6ac6b3"/><text x="354" y="191" fill="white" textAnchor="middle" dominantBaseline="central" fontSize="36.923" fontWeight="700">2</text>
+ {[286,394,827].map(top=><image key={top} href={`${import.meta.env.BASE_URL}figma/ellipse9.svg`} x="334" y={top} width="43.662" height="43.662"/>)}
+ <g data-scroll-reveal><image href={`${import.meta.env.BASE_URL}figma/sparrow.png`} x="46" y="101" width="67" height="106"/><image href={`${import.meta.env.BASE_URL}figma/sparrow-arrow.svg`} x="65.5" y="211.5" width="30" height="22.18"/></g>
+ <foreignObject x="66" y="169" width="228" height="98"><div className="prep-copy" data-scroll-reveal><h1>플레이</h1><p><b>‘1’ 카드</b>를 가진 사람부터 시작합니다</p></div></foreignObject>
+ <foreignObject x="66" y="286" width="228" height="96"><div className="prep-copy" data-scroll-reveal><h2>패스하기</h2><p>낼 카드가 없다면 패스합니다<br/><small>낼 수 있어도 패스할 수 있어요.</small></p></div></foreignObject>
+ <foreignObject x="66" y="394" width="228" height="100"><div className="prep-copy" data-scroll-reveal><h2>카드 내기</h2><p>같은 조합이면서<br/>더 큰 수를 냅니다</p></div></foreignObject>
+ <g aria-label="3 페어보다 높은 5 페어">{[160,189,248,277].map((x,i)=><motion.g key={x} className={i<2?'fixed-pair':'entering-pair'} initial={{opacity:i<2||reduced?1:0,y:i<2||reduced?0:12}} animate={{opacity:1,y:0}} transition={{duration:reduced?0:.55,delay:i<2||reduced?0:1.1+(i-2)*.15}}><rect x={x} y="498" width="26" height="37" rx="3" fill="#bde6de"/><text x={x+13} y="521" textAnchor="middle" fontSize="14">{i<2?'3':'5'}</text></motion.g>)}</g>
+ {[['combos','조합내기',594,'combo-star.svg'],['special','특수카드',673,'special-star.svg']].map(([id,label,top,asset])=><g key={id}><image href={`${import.meta.env.BASE_URL}figma/${asset}`} x="332" y={top} width="43.66" height="43.66"/><foreignObject x="209" y={top} width="100" height="48"><button className={`play-pill ${id==='special'?'red':''}`} onClick={()=>onRule(String(id))}>{label}</button></foreignObject></g>)}
+ <foreignObject x="66" y="850" width="228" height="330"><div className="prep-copy" data-scroll-reveal><h2>트릭 획득</h2><p>바닥에 쌓인 카드 한 묶음이 트릭입니다.<br/>나머지 사람들이 모두 패스하면<br/>마지막으로 낸 사람이 가져갑니다.</p></div></foreignObject>
+ </g>}

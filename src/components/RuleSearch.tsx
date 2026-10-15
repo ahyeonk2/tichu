@@ -1,0 +1,7 @@
+import {useState} from 'react';
+import {rules,ruleById,type Rule} from '../data/rules';
+import {Sheet} from './RuleBottomSheet';
+const questions=[['페어가 있는데 왜 못 내나요?','compare'],['패스하면 다시 낼 수 있나요?','pass'],['폭탄은 언제 쓰나요?','bomb'],['스몰 티츄는 무엇인가요?','small'],['용으로 이기면 어떻게 되나요?','dragon']];
+export function RuleSearch({onClose,onSelect}:{onClose:()=>void;onSelect:(r:Rule)=>void}){const [query,setQuery]=useState('');const tokens=query.trim().toLowerCase().split(/\s+/);const found=rules.filter(r=>tokens.every(t=>`${r.title} ${r.summary} ${r.tags??''} ${r.details.join(' ')}`.toLowerCase().includes(t)));
+ return <Sheet label="규칙 바로 찾기" onClose={onClose}><div className="eyebrow">FIND YOUR WAY</div><h2>궁금한 규칙은?</h2><label className="search-label" htmlFor="rule-query">규칙명 또는 궁금한 단어</label><input id="rule-query" autoComplete="off" value={query} onChange={e=>setQuery(e.target.value)} placeholder="예: 폭탄, 봉황, 패스"/><p className="search-meta">{query?`${found.length}개의 규칙`:'자주 찾는 질문'}</p><div className="search-results">{query?found.map(r=><button key={r.id} onClick={()=>onSelect(r)}><b>{r.title}</b><span>{r.summary}</span><i>↗</i></button>):questions.map(([q,id])=><button key={id} onClick={()=>onSelect(ruleById[id])}><b>{q}</b><i>↗</i></button>)}{query&&!found.length&&<p>찾는 규칙이 없어요. ‘페어’나 ‘선언’처럼 짧게 찾아보세요.</p>}</div>{!query&&<div className="all-rules"><p className="search-meta">모든 규칙</p>{rules.map(r=><button key={r.id} onClick={()=>onSelect(r)}>{r.title} ＋</button>)}</div>}</Sheet>
+}
